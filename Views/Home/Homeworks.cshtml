@@ -1,0 +1,92 @@
+﻿@using WebApplication3.Services.Time
+@inject ITimeService timeService
+
+@{
+    ViewData["Title"] = "Homeworks";
+}
+
+<style>
+    .homework-block {
+        margin-left: 50px;
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+    td {
+        border: 1px solid black;
+        padding: 5px 10px;
+    }
+    pre {
+        margin: 0;
+    }
+</style>
+
+<p>
+    Завдання: Реалізувати відображення прайс-листу (створеного на занятті)
+    у вигляді HTML-таблиці:
+    <pre>
+        -----------------------------
+        1 | Кулька ялинкова | 29.90
+        ....
+    </pre>
+    Забезпечити виведення двох знаків після коми (у ціні), а також
+    нумерацію товарів (перший рядок таблиці)
+    У відповідь на ДЗ прикласти посилання на репозиторій, у репозиторії
+    додати скріншоти роботи проєкту.
+</p>
+
+<div class="homework-block">
+    @{
+        int counter = 1;
+
+        Dictionary<String, double> priceList = new(){
+        {"Кулька ялинкова", 29.90},
+        {"Серпантин", 45.00},
+        {"Вогні бенгальські", 84.40},
+        {"Гірлянда 3м", 129.90},
+        {"Ялинка штучна 1.5м", 1229.90}
+        };
+    }
+
+    <table>
+        @foreach (var (name, price) in priceList)
+        {
+            <tr>
+                <td>@counter</td>
+                <td>@name</td>
+                <td>@price.ToString("F2")</td>
+            </tr>
+            counter++;
+        }
+    </table>
+</div>
+
+<p>
+    Завдання: Створити сервіс часу, який дозволяє:
+    <pre>
+        а) повернути поточну мітку часу як timestamp (long);
+        б) повернути поточну мітку часу як SQL-формат (YYYY-MM-DD HH:MM:SS);
+        в) розпарсити дату, передану в SQL-форматі -- повернути поточну мітку часу як timestamp (long);
+    </pre>
+</p>
+
+
+<div class="homework-block">
+    <p>Timestamp: @timeService.GetCurrentDateTimestamp()</p>
+    <p>SQL-формат: @timeService.GetCurrentDateSqlFormat()</p>
+    <p>Розпарсена дата: @timeService.ParseSqlFormatToTimestamp(timeService.GetCurrentDateSqlFormat())</p>
+</div>
+
+<p>
+    Завдання:
+    <pre>
+        1. Інжектувати сервіс DK до контролера, одержати його результат
+           для тестових даних, вивести на сторінці сайту.
+        2. Імплементувати другу функцію обчислення DK (5.2 PBKDF2) зі 
+           стандарту RFC2898 (https://datatracker.ietf.org/doc/html/rfc2898)
+    </pre>
+</p>
+
+<div class="homework-block">
+    <p>DK PBKDF1 PASS1: @ViewData["pbkdf1_pass1"]</p>
+    <p>DK PBKDF1 PASS2: @ViewData["pbkdf1_pass2"]</p>
+</div>

@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Razor";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Razor</h1>
+</div>
+
+<p>Razor - технологія розширення HTML.</p>
+
+<p>
+    <code>&commat;{int x = 10;}</code>
+    @{
+        int x = 10;
+    }
+    <code>&commat;x = @x</code>
+</p>
+
+<h2>Умовні конструкції</h2>
+
+<p>
+    <pre>
+        &commat;if (x % 2 == 0)
+        {
+            &lt;b&gt;число х - парне&lt;/b&gt;
+        }
+        else
+        {
+            &lt;i&gt;число х - непарне&lt;/i&gt;
+        }
+    </pre>
+    @if(x%2 == 0)
+    {
+        <b>число х - парне</b>
+    }
+    else
+    {
+        <i>число х - непарне</i>
+    }
+    <br/>
+</p>
+
+<h2>Циклічні конструкції</h2>
+
+<p>
+    <pre>
+        &commat;for (int i = 1; i &lt;= 5; i++)
+        {
+            &lt;span style="font-size: &commat;(i * 2 + 10)px"&gt;
+                &commat;i
+            &lt;/span&gt;
+        }
+    </pre>
+    Результат:
+    @for (int i = 1; i <= 5; i++)
+    {
+        <span style="font-size: @(i * 2 + 10)px">
+            @i
+        </span>
+    }
+    <br/>
+</p>

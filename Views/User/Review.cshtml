@@ -1,0 +1,35 @@
+﻿@{
+    ViewData["Title"] = "Ваш відгук";
+}
+
+<link rel="stylesheet" href="~/css/User/user_rate.css" asp-append-version="true" />
+
+<div class="text-center">
+    <h1 class="display-4">Відгук про сайт</h1>
+</div>
+
+<form asp-action="LeftReview">
+    <div class="row">
+        <div class="col">
+            <div class="mb-3">
+                <label for="comment-field" class="form-label comm">Коментар</label>
+                <textarea class="form-control" id="comment-field" name="Comment" rows="3"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="user-rate-block">
+                <label class="form-label">Оцінка:</label>
+               
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-end">
+            <button type="submit" class="btn btn-primary">Залишити свій відгук про сайт</button>
+        </div>
+    </div>
+</form>
+
+@Html.DisplayFor(m => ViewData["reviewModel"])

@@ -1,0 +1,74 @@
+﻿@model WebApplication3.Models.User.UserCartPageModel
+
+<link rel="stylesheet" href="~/css/Shop/cart.css" asp-append-version="true" />
+
+@{
+	ViewData["Title"] = "Кошик";
+	bool isAuthenticated = Context.User.Identity?.IsAuthenticated ?? false;
+}
+
+<div class="text-center">
+	<h1 class="display-4">Мій кошик</h1>
+</div>
+
+@if (!isAuthenticated)
+{
+	<h2>Кошик активується після входу в систему</h2>
+}
+else
+{
+	if (Model.ActiveCart == null || Model.ActiveCart.CartDetails.Count == 0)
+	{
+		<h2>Ваш кошик поки, що порожній.</h2>
+	}
+	else
+	{
+		if (Model.ActiveCart.MomentCancel != null)
+		{
+			<h3 class="cancel-info">Скасовано @Model.ActiveCart.MomentCancel.Value.ToShortDateString()</h3>
+		}
+		else if (Model.ActiveCart.MomentBuy != null)
+		{
+			<h3 class="buy-info">Придбано @Model.ActiveCart.MomentBuy.Value.ToShortDateString()</h3>
+		}
+		else
+		{
+			<h3 class="open-info">Відкритий з @Model.ActiveCart.MomentOpen.ToShortDateString()</h3>
+		}
+		<h2 class="cart-header">Товари у кошику:</h2>
+		<div class="cart-items-container">
+			@foreach (var detail in Model.ActiveCart.CartDetails)
+			{
+				@Html.DisplayFor(m => detail)
+				;
+			}
+		</div>
+		<div class="row summary-price">
+			<div class="offset-8 col-lg-3 col-md-4 col-sm-5">
+				Загальна вартість замовлення, ₴:
+			</div>
+			<div class="col-1">
+				<b>@Model.ActiveCart.Price</b>
+			</div>
+		</div>
+
+		<div class="row buy-cancel-btns">
+			<div class="offset-9 col-lg-3 col-md-4 col-sm-5 text-end">
+				@if (Model.ActiveCart.MomentCancel != null || Model.ActiveCart.MomentBuy != null)
+				{
+					<button class="btn btn-success" data-cart-repeat="@Model.ActiveCart.Id">Повторити</button>
+				}
+				else
+				{
+					<button class="btn btn-danger" data-cart-cancel="@Model.ActiveCart.Id">Скасувати</button>
+					<button class="btn btn-success" data-cart-buy="@Model.ActiveCart.Id">Придбати</button>
+				}
+			</div>
+
+		</div>
+	}
+	<br />
+	<br />
+	<button id="back-btn" class="btn btn-primary">Повернутись</button>
+	<a asp-controller="Shop" asp-action="Index" class="btn btn-primary">Виберіть товари</a>
+}
